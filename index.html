@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/modal-form.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <script type="module" src="./js/index.js"></script>
+    <title>Testing Js</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav>
+        <ul class="ul-defaults-none nav-items nav-js">
+          <li class="nav-link" data-open="modal-form-js">Form</li>
+          <li class="nav-link">About</li>
+          <li class="nav-link">Contact</li>
+        </ul>
+      </nav>
+    </header>
+    <div class="modal-overlay" id="modal-form-js" data-close>
+      <div class="modal-body">
+        <form action="#">
+          <div class="text-input input-primary">
+            <label htmlFor="first-name">First Name:</label>
+            <input type="text" id="first-name" />
+          </div>
+          <div class="text-input input-primary">
+            <label htmlFor="last-name">Last Name:</label>
+            <input type="text" id="last-name" />
+          </div>
+          <div class="text-input input-primary">
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" />
+          </div>
+          <div class="text-input input-primary">
+            <label htmlFor="city">City:</label>
+            <input type="text" id="city" />
+          </div>
+          <div class="phone-input">
+            <label htmlFor="phone">Phone:</label>
+            <input type="text" name="phone" />
+            -
+            <input type="text" name="phone" />
+            -
+            <input type="text" name="phone" />
+          </div>
+          <div class="input-submit">
+            <input
+              type="submit"
+              value="Submit"
+              id="submit-react"
+              class="btn-primary"
+            />
+          </div>
+        </form>
+        <div class="close-button">X</div>
+      </div>
+    </div>
+  </body>
+</html>
