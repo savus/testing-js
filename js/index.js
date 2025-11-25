@@ -1,26 +1,19 @@
-import { setActive } from "./modules/helper-functions.js";
+import { closeButtonOnClick, navBarHandler } from "./click-events.js";
 
 export const active = "active";
-const isVisible = "is-visible";
-const closeButton = "close-button";
+export const isVisible = "is-visible";
+export const dataClose = "[data-close]";
 
 const nav = ".nav-js";
+export const navLink = ".nav-link";
 const navBar = document.querySelector(nav);
+
+const closeButton = "close-button";
 
 const closeButtons = document.querySelectorAll(`.${closeButton}`);
 
-navBar.addEventListener("click", ({ target }) => {
-  const isLink = target.matches(".nav-link");
-  if (isLink) {
-    const elementToOpen = document.getElementById(target.dataset.open);
-    elementToOpen?.classList.add(isVisible);
-    setActive(`.nav-link`, target);
-  }
-});
+navBar.addEventListener("click", navBarHandler);
 
 closeButtons.forEach((button) => {
-  button.addEventListener("click", ({ target }) => {
-    const parentToClose = target.closest("[data-close]");
-    parentToClose.classList.remove(isVisible);
-  });
+  button.addEventListener("click", closeButtonOnClick);
 });
