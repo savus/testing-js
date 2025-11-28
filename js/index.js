@@ -1,9 +1,11 @@
 import {
   closeButtonOnClick,
   documentClickHandler,
+  formSubmitHandler,
+  inputKeyUpHandler,
   navBarClickHandler,
-} from "./click-events.js";
-import { patterns, showOrRemoveError, validateField } from "./validations.js";
+} from "./event-handlers.js";
+import { showOrRemoveError, validateField } from "./validations.js";
 
 export const active = "active";
 export const isVisible = "is-visible";
@@ -15,9 +17,24 @@ const nav = ".nav-js";
 export const navLink = ".nav-link";
 const navBar = document.querySelector(nav);
 
-let hasSubmitted = false;
+export let hasSubmitted = false;
+export const setHasSubmitted = (state) => (hasSubmitted = state);
+
 const userForm = document.getElementById("modal-form-js");
-const formInputs = document.querySelectorAll("#modal-form-js [data-pattern]");
+export let userInformation = null;
+export const setUserInformation = (data) => (userInformation = data);
+
+export const firstNameInput = document.getElementById("first-name-input");
+export const lastNameInput = document.getElementById("last-name-input");
+export const emailInput = document.getElementById("email-input");
+export const cityInput = document.getElementById("city-input");
+
+export const formInputs = [
+  firstNameInput,
+  lastNameInput,
+  emailInput,
+  cityInput,
+];
 
 const closeButton = "close-button";
 const closeButtons = document.querySelectorAll(`.${closeButton}`);
@@ -29,25 +46,11 @@ closeButtons.forEach((button) => {
 });
 
 formInputs.forEach((input) => {
-  input.addEventListener("keyup", (e) => {
-    if (hasSubmitted) {
-      const isFieldValid = validateField(
-        e.target.dataset.pattern,
-        e.target.value
-      );
-      showOrRemoveError(e.target, isFieldValid);
-    }
+  input.addEventListener("keyup", () => {
+    inputKeyUpHandler(input);
   });
 });
 
-userForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  hasSubmitted = true;
-  formInputs.forEach((input) => {
-    const isFieldValid = validateField(input.dataset.pattern, input.value);
-    showOrRemoveError(input, isFieldValid);
-  });
-  if (!document.querySelector(".invalid")) console.log("success");
-});
+userForm.addEventListener("submit", formSubmitHandler);
 
 document.addEventListener("click", documentClickHandler);
