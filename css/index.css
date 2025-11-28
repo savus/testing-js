@@ -94,6 +94,12 @@ input.btn-primary {
   color: #fff;
 }
 
+.text-input.invalid + .input-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .modal-overlay {
   --opacity: 0;
   --visibility: hidden;

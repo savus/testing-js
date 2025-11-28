@@ -3,7 +3,7 @@ import {
   documentClickHandler,
   navBarClickHandler,
 } from "./click-events.js";
-import { patterns } from "./validations.js";
+import { patterns, validate } from "./validations.js";
 
 export const active = "active";
 export const isVisible = "is-visible";
@@ -37,8 +37,8 @@ userForm.addEventListener("submit", (e) => {
 
 formInputs.forEach((input) => {
   input.addEventListener("keyup", (e) => {
-    const { target } = e;
-    const { value } = e.target;
+    const datasetPattern = e.target.dataset.pattern;
+    validate(patterns[datasetPattern], e.target);
   });
 });
 
