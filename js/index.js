@@ -3,7 +3,7 @@ import {
   documentClickHandler,
   navBarClickHandler,
 } from "./click-events.js";
-import { patterns, validate } from "./validations.js";
+import { patterns, showOrRemoveError, validateField } from "./validations.js";
 
 export const active = "active";
 export const isVisible = "is-visible";
@@ -15,11 +15,9 @@ const nav = ".nav-js";
 export const navLink = ".nav-link";
 const navBar = document.querySelector(nav);
 
-const hasSubmitted = false;
+let hasSubmitted = false;
 const userForm = document.getElementById("modal-form-js");
 const formInputs = document.querySelectorAll("#modal-form-js [data-pattern]");
-
-console.log(formInputs);
 
 const closeButton = "close-button";
 const closeButtons = document.querySelectorAll(`.${closeButton}`);
@@ -30,16 +28,26 @@ closeButtons.forEach((button) => {
   button.addEventListener("click", closeButtonOnClick);
 });
 
+formInputs.forEach((input) => {
+  input.addEventListener("keyup", (e) => {
+    if (hasSubmitted) {
+      const isFieldValid = validateField(
+        e.target.dataset.pattern,
+        e.target.value
+      );
+      showOrRemoveError(e.target, isFieldValid);
+    }
+  });
+});
+
 userForm.addEventListener("submit", (e) => {
   e.preventDefault();
   hasSubmitted = true;
-});
-
-formInputs.forEach((input) => {
-  input.addEventListener("keyup", (e) => {
-    const datasetPattern = e.target.dataset.pattern;
-    validate(patterns[datasetPattern], e.target);
+  formInputs.forEach((input) => {
+    const isFieldValid = validateField(input.dataset.pattern, input.value);
+    showOrRemoveError(input, isFieldValid);
   });
+  if (!document.querySelector(".invalid")) console.log("success");
 });
 
 document.addEventListener("click", documentClickHandler);

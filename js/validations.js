@@ -4,13 +4,10 @@ export const patterns = {
   city: /^[a-zA-Z]{4,15}$/,
 };
 
-export const validate = (regex, field) => {
-  const inputContainer = field.closest(".text-input");
-  if (regex.test(field.value)) {
-    inputContainer.classList.remove("invalid");
-    return;
-  } else {
-    inputContainer.classList.add("invalid");
-    return;
-  }
+export const validateField = (regex, input) => patterns[regex].test(input);
+
+export const showOrRemoveError = (field, isValid) => {
+  const parentContainer = field.closest(".text-input");
+  if (isValid) parentContainer.classList.remove("invalid");
+  else parentContainer.classList.add("invalid");
 };
