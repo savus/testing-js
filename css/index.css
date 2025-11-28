@@ -54,11 +54,15 @@ input.btn-primary {
 
 .dropdown {
   position: relative;
-  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .dropdown-menu {
-  opacity: 0;
+  --opacity: 0;
+  --visibility: hidden;
+  --transition-speed: 150ms;
+  --translate-y: -10px;
+  opacity: var(--opacity);
+  visibility: var(--visibility);
   position: absolute;
   background-color: #fff;
   left: 0;
@@ -66,20 +70,28 @@ input.btn-primary {
   padding: 0.75rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-  transition: opactiy 150 ease-in-out, transform 150ms ease-in-out;
-  transform: translateY(-10px);
+  transition: opacity var(--transition-speed) ease-in-out,
+    transform var(--transition-speed) ease-in-out,
+    visibility var(--transition-speed) ease-in-out;
+  transform: translateY(var(--translate-y));
   pointer-events: none;
   z-index: 10;
 }
 
-.dropdown-menu.active {
-  opacity: 1;
+.dropdown.active > .nav-link + .dropdown-menu {
+  --opacity: 1;
+  --visibility: visible;
+  --translate-y: 0;
+  pointer-events: auto;
 }
 
-.dropdown.active > .nav-link + .dropdown-menu {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+.input-error {
+  margin: 0.8rem 0;
+  padding: 1rem;
+  background-color: red;
+  border-radius: var(--size-8);
+  display: none;
+  color: #fff;
 }
 
 .modal-overlay {
