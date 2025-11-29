@@ -15,7 +15,7 @@ import {
   setUserInformation,
   userInformation,
 } from "./index.js";
-import { setActive } from "./helper-functions.js";
+import { setActive } from "./utility-functions.js";
 import { showOrRemoveError, validateField } from "./validations.js";
 
 /* ClICK */
@@ -49,34 +49,35 @@ export const documentClickHandler = ({ target }) => {
 };
 
 /* KEYUP */
+
+const handleInputValidation = (input) => {
+  const { value } = input;
+  const name = input.attributes.name.value;
+  const isValidField = validateField(name, value);
+  showOrRemoveError(input, isValidField);
+  return isValidField;
+};
+
 export const inputKeyUpHandler = (input) => {
-  if (hasSubmitted) {
-    const { value } = input;
-    const name = input.attributes.name.value;
-    const isValidField = validateField(name, value);
-    showOrRemoveError(input, isValidField);
-  }
+  if (hasSubmitted) handleInputValidation(input);
 };
 
 /* SUBMIT */
 export const formSubmitHandler = (e) => {
+  let doBadInputsExist = false;
   e.preventDefault();
   setHasSubmitted(true);
-  let doBadInputsExist = false;
-  formInputs.forEach((input) => {
-    const { value } = input;
-    const name = input.attributes.name.value;
-    const isValidField = validateField(name, value);
-    showOrRemoveError(input, isValidField);
 
-    if (!isValidField) doBadInputsExist = true;
+  formInputs.forEach((input) => {
+    if (!handleInputValidation(input)) doBadInputsExist = true;
   });
+
   if (!doBadInputsExist) {
     setUserInformation({
-      firstNameInput: firstNameInput.value,
-      lastNameInput: lastNameInput.value,
-      cityInput: cityInput.value,
-      emailInput: emailInput.value,
+      firstNameInput: firstNameInput.value.trim(),
+      lastNameInput: lastNameInput.value.trim(),
+      cityInput: cityInput.value.trim(),
+      emailInput: emailInput.value.trim(),
     });
     console.log(userInformation);
   }

@@ -1,7 +1,8 @@
 export const patterns = {
-  username: /^[a-zA-Z]{2,20}$/,
-  email: /^([a-zA-Z\d.-]{2,30})@([a-z.-]{2,8})(\.[a-z]{2,8})(\.[a-z]{2,8})?$/,
-  city: /^[a-zA-Z]{4,15}$/,
+  username: /^[a-zA-Z]{2,20}([\s]*)?$/,
+  email:
+    /^([a-zA-Z\d.-]{2,30})@([a-z.-]{2,8})(\.[a-z]{2,8})(\.[a-z]{2,8})?([\s]*)?$/,
+  city: /^[a-zA-Z]{4,15}([\s]*)?$/,
 };
 
 export const validateField = (regex, input) => patterns[regex].test(input);

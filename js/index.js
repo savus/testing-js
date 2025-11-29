@@ -5,7 +5,6 @@ import {
   inputKeyUpHandler,
   navBarClickHandler,
 } from "./event-handlers.js";
-import { showOrRemoveError, validateField } from "./validations.js";
 
 export const active = "active";
 export const isVisible = "is-visible";
