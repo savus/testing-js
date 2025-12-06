@@ -44,7 +44,7 @@ export const documentClickHandler = ({ target }) => {
 
   document.querySelectorAll(`${dataDropdown}.${active}`).forEach((dropdown) => {
     if (dropdown === dropDownParent) return;
-    dropdown.classList.remove("active");
+    dropdown.classList.remove(active);
   });
 };
 

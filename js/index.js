@@ -12,6 +12,10 @@ export const isVisible = "is-visible";
 export const dataClose = "[data-close]";
 export const dataDropdownButton = `[data-dropdown-button]`;
 export const dataDropdown = "[data-dropdown]";
+const dataPhone = "[data-phone]";
+const firstNameId = "first-name-input";
+const lastNameId = "last-name-input";
+const cities = "cities";
 
 const nav = ".nav-js";
 export const navLink = ".nav-link";
@@ -24,12 +28,14 @@ const userForm = document.getElementById("modal-form-js");
 export let userInformation = null;
 export const setUserInformation = (data) => (userInformation = data);
 
-export const firstNameInput = document.getElementById("first-name-input");
-export const lastNameInput = document.getElementById("last-name-input");
+export const firstNameInput = document.getElementById(firstNameId);
+export const lastNameInput = document.getElementById(lastNameId);
 export const emailInput = document.getElementById("email-input");
 export const cityInput = document.getElementById("city-input");
+export const phoneInput = document.querySelectorAll("[]");
+export const phoneInputState = ["", "", ""];
 
-export const cityDatalist = document.getElementById("cities");
+export const cityDatalist = document.getElementById(cities);
 
 export const formInputs = [
   firstNameInput,
