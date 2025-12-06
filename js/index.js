@@ -4,6 +4,7 @@ import {
   formSubmitHandler,
   inputKeyUpHandler,
   navBarClickHandler,
+  phoneOnChangeEventHandler,
 } from "./event-handlers.js";
 import { populateCities } from "./initialization.js";
 
@@ -12,7 +13,7 @@ export const isVisible = "is-visible";
 export const dataClose = "[data-close]";
 export const dataDropdownButton = `[data-dropdown-button]`;
 export const dataDropdown = "[data-dropdown]";
-const dataPhone = "[data-phone]";
+const dataPhone = "data-phone";
 const firstNameId = "first-name-input";
 const lastNameId = "last-name-input";
 const cities = "cities";
@@ -32,8 +33,11 @@ export const firstNameInput = document.getElementById(firstNameId);
 export const lastNameInput = document.getElementById(lastNameId);
 export const emailInput = document.getElementById("email-input");
 export const cityInput = document.getElementById("city-input");
-export const phoneInput = document.querySelectorAll("[]");
-export const phoneInputState = ["", "", ""];
+export const phone1 = document.querySelector(`[${dataPhone}='1']`);
+export const phone2 = document.querySelector(`[${dataPhone}='2']`);
+export const phone3 = document.querySelector(`[${dataPhone}='3']`);
+export const phoneInputs = [phone1, phone2, phone3];
+export const maxInputLengths = [3, 3, 4];
 
 export const cityDatalist = document.getElementById(cities);
 
@@ -59,6 +63,10 @@ formInputs.forEach((input) => {
   input.addEventListener("keyup", () => {
     inputKeyUpHandler(input);
   });
+});
+
+phoneInputs.forEach((input, index) => {
+  input.addEventListener("keyup", phoneOnChangeEventHandler(index));
 });
 
 userForm.addEventListener("submit", formSubmitHandler);

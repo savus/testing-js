@@ -10,7 +10,11 @@ import {
   hasSubmitted,
   isVisible,
   lastNameInput,
+  maxInputLengths,
   navLink,
+  phone1,
+  phone2,
+  phoneInputs,
   setHasSubmitted,
   setUserInformation,
   userInformation,
@@ -62,6 +66,35 @@ export const inputKeyUpHandler = (input) => {
   if (hasSubmitted) handleInputValidation(input);
 };
 
+export const phoneOnChangeEventHandler = (index) => (e) => {
+  const value = e.target.value;
+  const currentMaxLength = maxInputLengths[index];
+  const nextInput =
+    index < phoneInputs.length - 1
+      ? phoneInputs[index + 1]
+      : phoneInputs[index];
+  const prevInput = index > 0 ? phoneInputs[index - 1] : phoneInputs[index];
+  const shouldGoToNextInput = value.length === currentMaxLength;
+  const shouldGoToPrevInput = value.length === 0;
+  const joinedInputs = phoneInputs.map((input) => input.value).join("");
+  const isValidField = validateField("phone", joinedInputs);
+
+  if (shouldGoToNextInput) {
+    nextInput.focus();
+  }
+
+  if (shouldGoToPrevInput) {
+    prevInput.focus();
+  }
+
+  if (hasSubmitted) {
+    showOrRemoveError(e.target, isValidField);
+    if (isValidField) return true;
+  }
+
+  return false;
+};
+
 /* SUBMIT */
 export const formSubmitHandler = (e) => {
   let doBadInputsExist = false;
@@ -78,6 +111,7 @@ export const formSubmitHandler = (e) => {
       lastNameInput: lastNameInput.value.trim(),
       cityInput: cityInput.value.trim(),
       emailInput: emailInput.value.trim(),
+      phoneInput: phoneInputs.map((input) => input.value).join(""),
     });
     console.log(userInformation);
   }
