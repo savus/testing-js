@@ -5,6 +5,7 @@ import {
   inputKeyUpHandler,
   navBarClickHandler,
 } from "./event-handlers.js";
+import { populateCities } from "./initialization.js";
 
 export const active = "active";
 export const isVisible = "is-visible";
@@ -28,6 +29,8 @@ export const lastNameInput = document.getElementById("last-name-input");
 export const emailInput = document.getElementById("email-input");
 export const cityInput = document.getElementById("city-input");
 
+export const cityDatalist = document.getElementById("cities");
+
 export const formInputs = [
   firstNameInput,
   lastNameInput,
@@ -43,6 +46,8 @@ navBar.addEventListener("click", navBarClickHandler);
 closeButtons.forEach((button) => {
   button.addEventListener("click", closeButtonOnClick);
 });
+
+populateCities();
 
 formInputs.forEach((input) => {
   input.addEventListener("keyup", () => {

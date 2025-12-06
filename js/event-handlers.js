@@ -15,8 +15,8 @@ import {
   setUserInformation,
   userInformation,
 } from "./index.js";
-import { setActive } from "./utility-functions.js";
-import { showOrRemoveError, validateField } from "./validations.js";
+import { setActive } from "./helper-functions.js";
+import { showOrRemoveError, validateField } from "./utils/validations.js";
 
 /* ClICK */
 export const navBarClickHandler = ({ target }) => {
