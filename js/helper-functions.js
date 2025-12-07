@@ -1,4 +1,4 @@
-import { active, formInputs, phoneInputs } from "./index.js";
+import { active, formInputs, phoneInputs, searchInput } from "./index.js";
 
 export const setActive = (selector, element) => {
   const activeElement = document.querySelector(`${selector}.${active}`);
@@ -17,3 +17,7 @@ export const clearFormValues = () => {
 
 export const getJoinedPhoneInput = (inputs) =>
   inputs.map((input) => input.value).join("");
+
+export const clearSearchInput = () => {
+  searchInput.value = "";
+};
