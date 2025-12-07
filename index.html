@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="./css/modal-form.css" />
     <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/portfolio-section.css" />
+    <script
+      src="https://kit.fontawesome.com/062335cba3.js"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="./js/index.js"></script>
     <title>Testing Js</title>
   </head>
   <body>
-    <header class="main-header">
+    <header class="main-header container">
       <nav>
         <ul class="ul-defaults-none nav-items nav-js">
           <li class="nav-link" data-open="modal-form-js">Form</li>
@@ -23,7 +28,27 @@
         </ul>
       </nav>
     </header>
-    <div class="modal-overlay is-visible" id="modal-form-js" data-close>
+    <section class="portfolio-section container">
+      <div class="portfolio-header">
+        <div class="search-container">
+          <label for="search">
+            <input type="text" id="search" class="btn-primary" />
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+        </div>
+        <div class="portfolio-navbar nav-items">
+          <ul class="portfolio-nav ul-defaults-none">
+            <li class="filter-link">filter link</li>
+            <li class="filter-link">filter link</li>
+            <li class="filter-link">filter link</li>
+            <li class="filter-link">filter link</li>
+            <li class="filter-link">filter link</li>
+          </ul>
+        </div>
+      </div>
+      <div class="portfolio-grid"></div>
+    </section>
+    <div class="modal-overlay" id="modal-form-js" data-close>
       <div class="modal-body">
         <form action="#">
           <div class="text-input input-primary">

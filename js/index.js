@@ -6,7 +6,7 @@ import {
   navBarClickHandler,
   phoneOnChangeEventHandler,
 } from "./event-handlers.js";
-import { populateCities } from "./initialization.js";
+import { populateCities, populatePortfolioCards } from "./initialization.js";
 
 export const active = "active";
 export const isVisible = "is-visible";
@@ -44,6 +44,9 @@ export const maxInputLengths = [3, 3, 4];
 
 export const cityDatalist = document.getElementById(cities);
 
+const portfolioClass = ".portfolio-grid";
+export const portfolioGrid = document.querySelector(portfolioClass);
+
 export const formInputs = [
   firstNameInput,
   lastNameInput,
@@ -74,4 +77,10 @@ phoneInputs.forEach((input, index) => {
 
 userForm.addEventListener("submit", formSubmitHandler);
 
+populatePortfolioCards();
+
 document.addEventListener("click", documentClickHandler);
+
+/* TESTING */
+// const image1 = "../assets/week 8 image assets/portfolio-1.jpg";
+/** */
