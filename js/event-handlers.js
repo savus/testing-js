@@ -72,6 +72,7 @@ export const inputKeyUpHandler = (inputField) => {
 export const phoneOnChangeEventHandler = (index) => (e) => {
   const value = e.target.value;
   const keyPressed = e.code;
+  if (keyPressed === "Space") console.log("space pressed");
   const isArrowKeyPressed =
     keyPressed === "ArrowRight" ||
     keyPressed === "ArrowLeft" ||
