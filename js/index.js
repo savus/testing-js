@@ -6,6 +6,7 @@ import {
   navBarClickHandler,
   phoneOnChangeEventHandler,
 } from "./event-handlers.js";
+import { clearFormValues, clearPhoneInputs } from "./helper-functions.js";
 import { populateCities, populatePortfolioCards } from "./initialization.js";
 
 export const active = "active";
@@ -41,6 +42,9 @@ export const phoneInputs = [phone1, phone2, phone3];
 export const setPhoneInputs = (array) =>
   array.forEach((value, index) => (phoneInputs[index].value = value));
 export const maxInputLengths = [3, 3, 4];
+
+export let doBadInputsExist = false;
+export const setDoBadInputsExist = (boolean) => (doBadInputsExist = boolean);
 
 export const cityDatalist = document.getElementById(cities);
 
@@ -82,5 +86,5 @@ populatePortfolioCards();
 document.addEventListener("click", documentClickHandler);
 
 /* TESTING */
-// const image1 = "../assets/week 8 image assets/portfolio-1.jpg";
+clearFormValues();
 /** */

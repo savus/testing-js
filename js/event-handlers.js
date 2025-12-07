@@ -4,6 +4,7 @@ import {
   dataClose,
   dataDropdown,
   dataDropdownButton,
+  doBadInputsExist,
   emailInput,
   firstNameInput,
   formInputs,
@@ -13,17 +14,18 @@ import {
   maxInputLengths,
   navLink,
   phoneInputs,
+  setDoBadInputsExist,
   setHasSubmitted,
   setPhoneInputs,
   setUserInformation,
   userInformation,
 } from "./index.js";
-import { clearFormValues, setActive } from "./helper-functions.js";
 import {
-  isPhoneValid,
-  showOrRemoveError,
-  validateField,
-} from "./utils/validations.js";
+  clearFormValues,
+  getJoinedPhoneInput,
+  setActive,
+} from "./helper-functions.js";
+import { toggleErrorMessage, validateField } from "./utils/validations.js";
 
 /* ClICK */
 export const navBarClickHandler = ({ target }) => {
@@ -58,10 +60,17 @@ export const documentClickHandler = ({ target }) => {
 /* KEYUP */
 
 const handleInputValidation = (inputField) => {
-  const { value } = inputField;
-  const name = inputField.attributes.name.value;
-  const isValidField = validateField(name, value);
-  showOrRemoveError(inputField, isValidField);
+  const {
+    value,
+    attributes: { name },
+  } = inputField;
+  const regex = name.value;
+  const inputValue =
+    regex === "phone" ? getJoinedPhoneInput(phoneInputs) : value;
+  const isValidField = validateField(inputValue, regex);
+  toggleErrorMessage(inputField, isValidField);
+  if (!isValidField) setDoBadInputsExist(true);
+  else setDoBadInputsExist(false);
   return isValidField;
 };
 
@@ -72,13 +81,15 @@ export const inputKeyUpHandler = (inputField) => {
 export const phoneOnChangeEventHandler = (index) => (e) => {
   const value = e.target.value;
   const keyPressed = e.code;
-  if (keyPressed === "Space") console.log("space pressed");
-  const isArrowKeyPressed =
-    keyPressed === "ArrowRight" ||
-    keyPressed === "ArrowLeft" ||
-    keyPressed === "ArrowDown" ||
-    keyPressed === "ArrowUp" ||
-    keyPressed === "Space";
+  const restrictedKeys = [
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowDown",
+    "ArrowUp",
+    "Space",
+    "Tab",
+  ];
+  const restrictedKeyPressed = restrictedKeys.includes(keyPressed);
   const currentMaxLength = maxInputLengths[index];
   const nextInput =
     index < phoneInputs.length - 1
@@ -92,30 +103,29 @@ export const phoneOnChangeEventHandler = (index) => (e) => {
     index === phoneInputIndex ? value : phoneInputField.value
   );
 
-  if (hasSubmitted) isPhoneValid();
-
-  if (shouldGoToNextInput && !isArrowKeyPressed) {
+  if (shouldGoToNextInput && !restrictedKeyPressed) {
     nextInput.focus();
   }
 
-  if (shoudlGoToPrevInput && !isArrowKeyPressed) {
+  if (shoudlGoToPrevInput && !restrictedKeyPressed) {
     prevInput.focus();
   }
 
   setPhoneInputs(newState);
+
+  if (hasSubmitted) handleInputValidation(phoneInputs[0]);
 };
 
 /* SUBMIT */
 export const formSubmitHandler = (e) => {
-  let doBadInputsExist = false;
   e.preventDefault();
   setHasSubmitted(true);
 
   formInputs.forEach((input) => {
-    if (!handleInputValidation(input)) doBadInputsExist = true;
+    handleInputValidation(input);
   });
 
-  if (!isPhoneValid()) doBadInputsExist = true;
+  handleInputValidation(phoneInputs[0]);
 
   if (!doBadInputsExist) {
     setUserInformation({

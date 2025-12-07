@@ -7,20 +7,11 @@ export const patterns = {
   phone: /^\d{10}$/,
 };
 
-export const validateField = (regex, inputValue) =>
+export const validateField = (inputValue, regex) =>
   patterns[regex].test(inputValue);
 
-export const showOrRemoveError = (inputField, isValid) => {
+export const toggleErrorMessage = (inputField, isValid) => {
   const parentContainer = inputField.closest(".text-input");
   if (isValid) parentContainer.classList.remove("invalid");
   else parentContainer.classList.add("invalid");
-};
-
-export const isPhoneValid = () => {
-  const concatPhoneInput = phoneInputs
-    .map((inputField) => inputField.value)
-    .join("");
-  const isValid = validateField("phone", concatPhoneInput);
-  showOrRemoveError(phoneInputs[0], isValid);
-  return isValid;
 };

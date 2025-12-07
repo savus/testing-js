@@ -14,3 +14,6 @@ export const clearFormValues = () => {
   formInputs.forEach((inputField) => (inputField.value = ""));
   clearPhoneInputs();
 };
+
+export const getJoinedPhoneInput = (inputs) =>
+  inputs.map((input) => input.value).join("");
