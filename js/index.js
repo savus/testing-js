@@ -36,7 +36,10 @@ export const cityInput = document.getElementById("city-input");
 export const phone1 = document.querySelector(`[${dataPhone}='1']`);
 export const phone2 = document.querySelector(`[${dataPhone}='2']`);
 export const phone3 = document.querySelector(`[${dataPhone}='3']`);
+
 export const phoneInputs = [phone1, phone2, phone3];
+export const setPhoneInputs = (array) =>
+  array.forEach((value, index) => (phoneInputs[index].value = value));
 export const maxInputLengths = [3, 3, 4];
 
 export const cityDatalist = document.getElementById(cities);

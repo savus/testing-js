@@ -12,15 +12,18 @@ import {
   lastNameInput,
   maxInputLengths,
   navLink,
-  phone1,
-  phone2,
   phoneInputs,
   setHasSubmitted,
+  setPhoneInputs,
   setUserInformation,
   userInformation,
 } from "./index.js";
-import { setActive } from "./helper-functions.js";
-import { showOrRemoveError, validateField } from "./utils/validations.js";
+import { clearFormValues, setActive } from "./helper-functions.js";
+import {
+  isPhoneValid,
+  showOrRemoveError,
+  validateField,
+} from "./utils/validations.js";
 
 /* ClICK */
 export const navBarClickHandler = ({ target }) => {
@@ -54,20 +57,27 @@ export const documentClickHandler = ({ target }) => {
 
 /* KEYUP */
 
-const handleInputValidation = (input) => {
-  const { value } = input;
-  const name = input.attributes.name.value;
+const handleInputValidation = (inputField) => {
+  const { value } = inputField;
+  const name = inputField.attributes.name.value;
   const isValidField = validateField(name, value);
-  showOrRemoveError(input, isValidField);
+  showOrRemoveError(inputField, isValidField);
   return isValidField;
 };
 
-export const inputKeyUpHandler = (input) => {
-  if (hasSubmitted) handleInputValidation(input);
+export const inputKeyUpHandler = (inputField) => {
+  if (hasSubmitted) handleInputValidation(inputField);
 };
 
 export const phoneOnChangeEventHandler = (index) => (e) => {
   const value = e.target.value;
+  const keyPressed = e.code;
+  const isArrowKeyPressed =
+    keyPressed === "ArrowRight" ||
+    keyPressed === "ArrowLeft" ||
+    keyPressed === "ArrowDown" ||
+    keyPressed === "ArrowUp" ||
+    keyPressed === "Space";
   const currentMaxLength = maxInputLengths[index];
   const nextInput =
     index < phoneInputs.length - 1
@@ -75,24 +85,23 @@ export const phoneOnChangeEventHandler = (index) => (e) => {
       : phoneInputs[index];
   const prevInput = index > 0 ? phoneInputs[index - 1] : phoneInputs[index];
   const shouldGoToNextInput = value.length === currentMaxLength;
-  const shouldGoToPrevInput = value.length === 0;
-  const joinedInputs = phoneInputs.map((input) => input.value).join("");
-  const isValidField = validateField("phone", joinedInputs);
+  const shoudlGoToPrevInput = value.length === 0;
 
-  if (shouldGoToNextInput) {
+  const newState = phoneInputs.map((phoneInputField, phoneInputIndex) =>
+    index === phoneInputIndex ? value : phoneInputField.value
+  );
+
+  if (hasSubmitted) isPhoneValid();
+
+  if (shouldGoToNextInput && !isArrowKeyPressed) {
     nextInput.focus();
   }
 
-  if (shouldGoToPrevInput) {
+  if (shoudlGoToPrevInput && !isArrowKeyPressed) {
     prevInput.focus();
   }
 
-  if (hasSubmitted) {
-    showOrRemoveError(e.target, isValidField);
-    if (isValidField) return true;
-  }
-
-  return false;
+  setPhoneInputs(newState);
 };
 
 /* SUBMIT */
@@ -105,6 +114,8 @@ export const formSubmitHandler = (e) => {
     if (!handleInputValidation(input)) doBadInputsExist = true;
   });
 
+  if (!isPhoneValid()) doBadInputsExist = true;
+
   if (!doBadInputsExist) {
     setUserInformation({
       firstNameInput: firstNameInput.value.trim(),
@@ -113,6 +124,7 @@ export const formSubmitHandler = (e) => {
       emailInput: emailInput.value.trim(),
       phoneInput: phoneInputs.map((input) => input.value).join(""),
     });
+    clearFormValues();
     console.log(userInformation);
   }
 };
