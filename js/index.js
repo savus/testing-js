@@ -2,14 +2,15 @@ import {
   closeButtonOnClick,
   documentClickHandler,
   formSubmitHandler,
+  handlePortfolioNavFilter,
   inputKeyUpHandler,
   navBarClickHandler,
   phoneOnChangeEventHandler,
 } from "./event-handlers.js";
 import {
   clearFormValues,
-  clearPhoneInputs,
   clearSearchInput,
+  removeActive,
   setActive,
 } from "./helper-functions.js";
 import { populateCities, populatePortfolioCards } from "./initialization.js";
@@ -70,7 +71,9 @@ console.log(portfolioNav);
 
 export const portfolioGrid = document.querySelector(`.${portfolioClass}`);
 populatePortfolioCards();
-const portfolioCards = document.querySelectorAll(`.${portfolioCardClass}`);
+export const portfolioCards = document.querySelectorAll(
+  `.${portfolioCardClass}`
+);
 
 navBar.addEventListener("click", navBarClickHandler);
 
@@ -95,11 +98,8 @@ phoneInputs.forEach((input, index) => {
 userForm.addEventListener("submit", formSubmitHandler);
 
 searchInput.addEventListener("keyup", ({ target: { value } }) => {
-  portfolioCards.forEach((card) => {
-    if (value === "all") card.style.display = "block";
-    else if (value.includes(card.dataset.filter)) card.style.display = "block";
-    else card.style.display = "none";
-  });
+  removeActive(dataFilter);
+  handlePortfolioNavFilter(value);
 });
 
 portfolioNav.addEventListener("click", ({ target }) => {
@@ -107,15 +107,11 @@ portfolioNav.addEventListener("click", ({ target }) => {
   if (isDataFilter) {
     clearSearchInput();
     setActive(dataFilter, target);
-    portfolioCards.forEach((card) => {
-      const dataset = target.dataset.filter;
-      if (dataset === "all") card.style.display = "block";
-      else if (dataset.includes(card.dataset.filter))
-        card.style.display = "block";
-      else card.style.display = "none";
-    });
+    const dataset = target.dataset.filter;
+    handlePortfolioNavFilter(dataset);
   }
 });
+
 /* GLOBAL */
 document.addEventListener("click", documentClickHandler);
 

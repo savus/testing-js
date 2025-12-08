@@ -9,9 +9,3 @@ BUG - local image paths would cause mime/type error when attempting to import th
 
 SOLUTION - instead of importing the path using the import <variable name> from "..file/path", initializing variables with the path name using an equals sign works just fine
 ex: const image1 = "../assets/images/image-1.jpg"
-
-
-TASKS: 
- - Fix portfolio nav items to de-activate when search input is typed in.
- - clean up search input and nav items code and cleanly abstract into separate functions.
- 

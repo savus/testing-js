@@ -6,6 +6,11 @@ export const setActive = (selector, element) => {
   element.classList.add(active);
 };
 
+export const removeActive = (selector) => {
+  const activeElement = document.querySelector(`${selector}.${active}`);
+  if (activeElement !== null) activeElement.classList.remove(active);
+};
+
 export const clearPhoneInputs = () => {
   phoneInputs.forEach((input) => (input.value = ""));
 };

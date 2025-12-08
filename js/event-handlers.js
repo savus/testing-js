@@ -14,6 +14,7 @@ import {
   maxInputLengths,
   navLink,
   phoneInputs,
+  portfolioCards,
   setDoBadInputsExist,
   setHasSubmitted,
   setPhoneInputs,
@@ -40,6 +41,14 @@ export const navBarClickHandler = ({ target }) => {
 export const closeButtonOnClick = ({ target }) => {
   const parentToClose = target.closest(dataClose);
   parentToClose.classList.remove(isVisible);
+};
+
+export const handlePortfolioNavFilter = (value) => {
+  portfolioCards.forEach((card) => {
+    if (value === "all") card.style.display = "block";
+    else if (value.includes(card.dataset.filter)) card.style.display = "block";
+    else card.style.display = "none";
+  });
 };
 
 export const documentClickHandler = ({ target }) => {
